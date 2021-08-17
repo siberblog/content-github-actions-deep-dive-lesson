@@ -82,12 +82,12 @@ jobs:
             aws lambda create-function --function-name test-function \
               --code S3Bucket=my-bucket-382rueiqpetjdiegjwk,S3Key=${{ github.sha }}.zip \
               --handler lambda_function.lambda_handler --runtime python3.8 \
-              --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/service-role/my-lambda-role
+              --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/my-lambda-role
       - name: Wait 30 seconds
         run: sleep 30
       - name: Destroy test function
         if: ${{ always() }}
-        run: aws lambda delete-function --function-name test-function
+        run: aws lambda delete-function --function-name test-function          
   
   deploy:
     runs-on: ubuntu-latest
