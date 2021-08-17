@@ -90,7 +90,7 @@ jobs:
         run: |
             aws lambda invoke --function-name test-function-${{ matrix.input }} \
               --payload $(echo "{\"input\": \"${{ matrix.input }}\"}" | base64) \
-              -- output json out 
+              --output json out 
             if grep -q "Error" out; then
               exit1
             fi
@@ -98,7 +98,8 @@ jobs:
         run: sleep 30
       - name: Destroy test function
         if: ${{ always() }}
-        run: aws lambda delete-function --function-name test-function-${{ matrix.input }}          
+        run: aws lambda delete-function --function-name test-function-${{ matrix.input }} 
+       
   
   deploy:
     runs-on: ubuntu-latest
